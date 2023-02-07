@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/DevOpsRocketDoctor/flaskweb.git
     targetRevision: HEAD
-    path: manifests/rest
+    path: .
   destination:
     server: https://kubernetes.default.svc
     namespace: default
