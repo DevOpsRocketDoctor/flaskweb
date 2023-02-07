@@ -1,10 +1,33 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Workflow
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: one-workflow
+  name: rest-api
 spec:
-  entrypoint: one-step
-  templates:
-  - name: one-step
-    container:
-      image: gcr.io/rdrtest/flaskweb:latest
+  selector:
+    matchLabels:
+      run: rest-api
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        run: restapi
+    spec:
+      containers:
+      - name: rest-api
+        image: gcr.io/rdrtest/flaskweb:latest
+        ports:
+        - containerPort: 8800
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-api
+  labels:
+    run: rest-api
+spec:
+  ports:
+  - port: 8800
+    protocol: TCP
+  type: LoadBalancer
+  selector:
+    run: rest-api
