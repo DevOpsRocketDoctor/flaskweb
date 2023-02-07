@@ -1,0 +1,10 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: one-workflow
+spec:
+  entrypoint: one-step
+  templates:
+  - name: one-step
+    container:
+      image: gcr.io/rdrtest/flaskweb:latest
